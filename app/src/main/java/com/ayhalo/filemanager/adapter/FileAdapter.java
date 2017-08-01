@@ -4,11 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ayhalo.filemanager.FileUtil;
+import com.ayhalo.filemanager.utils.FileUtil;
 import com.ayhalo.filemanager.R;
 import com.ayhalo.filemanager.base.FileBean;
 import com.ayhalo.filemanager.base.FileType;
@@ -16,20 +16,23 @@ import com.ayhalo.filemanager.base.FileType;
 import java.util.List;
 
 /**
+ *
  * Created by Halo on 2017/6/29.
  */
 
-public class FileAdapter extends ArrayAdapter<FileBean> {
+public class FileAdapter extends BaseAdapter {
 
+    private LayoutInflater inflater;
     private int resourceId;
     private Context mContext;
+    private List<FileBean> list;
 
     public FileAdapter(Context context, int id, List<FileBean> objects) {
-        super(context, id, objects);
         resourceId = id;
         mContext = context;
+        list = objects;
+        inflater=LayoutInflater.from(context);
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -37,7 +40,7 @@ public class FileAdapter extends ArrayAdapter<FileBean> {
         View view;
         FileHolder fileHolder;
         if (convertView == null) {
-            view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+            view = inflater.inflate(resourceId,parent,false);
             fileHolder = new FileHolder();
             fileHolder.fileIcon = (ImageView) view.findViewById(R.id.fileIcon);
             fileHolder.fileName = (TextView) view.findViewById(R.id.fileName);
@@ -77,6 +80,24 @@ public class FileAdapter extends ArrayAdapter<FileBean> {
         return view;
     }
 
+    @Override
+    public int getCount() {
+        return list.size();
+    }
+
+    @Override
+    public FileBean getItem(int positon) {
+        return list.get( positon );
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    public void refresh(List<FileBean> list){
+        this.list = list;
+    }
 }
 
 class FileHolder {

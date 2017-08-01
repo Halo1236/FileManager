@@ -8,7 +8,6 @@ public class FileBean {
     private FileType fileType;
     private int childCount ;
     private long size ;
-    private int holderType ;
 
     public String getName() {
         return name;
@@ -50,11 +49,4 @@ public class FileBean {
         this.size = size;
     }
 
-    public int getHolderType() {
-        return holderType;
-    }
-
-    public void setHolderType(int holderType) {
-        this.holderType = holderType;
-    }
 }

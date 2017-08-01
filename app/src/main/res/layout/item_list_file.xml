@@ -8,6 +8,7 @@
         android:id="@+id/fileIcon"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:padding="3dp"
         android:src="@drawable/file_icon_dir"/>
 
     <LinearLayout

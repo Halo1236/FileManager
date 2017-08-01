@@ -1,9 +1,9 @@
-package com.ayhalo.filemanager;
+package com.ayhalo.filemanager.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
+import com.ayhalo.filemanager.TxtFile;
 import com.ayhalo.filemanager.base.FileType;
 
 import java.io.File;
@@ -12,12 +12,7 @@ import java.util.Comparator;
 
 public class FileUtil {
 
-    /**
-     * 获取文件类型
-     *
-     * @param file
-     * @return
-     */
+
     public static FileType getFileType(File file) {
         if (file.isDirectory()) {
             return FileType.directory;
@@ -28,23 +23,19 @@ public class FileUtil {
             return FileType.music;
         }
 
-        if (fileName.endsWith(".mp4") || fileName.endsWith(".avi")
-                || fileName.endsWith(".3gp") || fileName.endsWith(".mov")
-                || fileName.endsWith(".rmvb") || fileName.endsWith(".mkv")
-                || fileName.endsWith(".flv") || fileName.endsWith(".rm")) {
+        if (fileName.endsWith(".mp4")) {
             return FileType.video;
         }
 
-        if (fileName.endsWith(".txt") || fileName.endsWith(".log") || fileName.endsWith(".xml")) {
+        if (fileName.endsWith(".txt") ) {
             return FileType.txt;
         }
 
-        if (fileName.endsWith(".zip") || fileName.endsWith(".rar")) {
+        if (fileName.endsWith(".zip")) {
             return FileType.zip;
         }
 
-        if (fileName.endsWith(".png") || fileName.endsWith(".gif")
-                || fileName.endsWith(".jpeg") || fileName.endsWith(".jpg")) {
+        if (fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
             return FileType.image;
         }
 
@@ -55,9 +46,6 @@ public class FileUtil {
         return FileType.other;
     }
 
-    /**
-     * 文件按照名字排序
-     */
     public static Comparator comparator = new Comparator<File>() {
         @Override
         public int compare(File file1, File file2) {
@@ -71,12 +59,6 @@ public class FileUtil {
         }
     };
 
-    /**
-     * 获取文件的子文件个数
-     *
-     * @param file
-     * @return
-     */
     public static int getFileChildCount(File file) {
         int count = 0;
         if (file.isDirectory()) {
@@ -89,12 +71,6 @@ public class FileUtil {
         return count;
     }
 
-    /**
-     * 文件大小转换
-     *
-     * @param size
-     * @return
-     */
     public static String sizeToChange(long size) {
         java.text.DecimalFormat df = new java.text.DecimalFormat("#.00");  //字符格式化，为保留小数做准备
 
@@ -117,33 +93,9 @@ public class FileUtil {
     }
 
 
-    /**
-     * 打开图片资源
-     *
-     * @param context
-     * @param file
-     */
-    public static void openImageIntent(Context context, File file) {
-        Uri path = Uri.fromFile(file);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addCategory("android.intent.category.DEFAULT");
-        intent.setDataAndType(path, "image/*");
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 打开文本资源
-     *
-     * @param context
-     * @param file
-     */
-    public static void openTextIntent(Context context, File file) {
-        Uri path = Uri.fromFile(file);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.addCategory("android.intent.category.DEFAULT");
-        intent.setDataAndType(path, "text/*");
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    public static void openTextIntent(Context context, String path) {
+        Intent intent = new Intent(context,TxtFile.class);
+        intent.putExtra("path",path);
         context.startActivity(intent);
     }
 
